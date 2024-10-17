@@ -1,0 +1,1516 @@
+<html>
+    <head>
+        <base href="blob:https://party.websim.ai/133acef4-4deb-401e-a353-da485872bfdd">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>App Configuration</title>
+        <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 20px;
+    }
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+    h1 {
+        background-color: #4285f4;
+        color: white;
+        margin: 0;
+        padding: 20px;
+        font-size: 24px;
+        text-align: center;
+    }
+    .option-list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+    .option-item {
+        padding: 15px 20px;
+        border-bottom: 1px solid #e0e0e0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .option-item:last-child {
+        border-bottom: none;
+    }
+    .option-item:hover {
+        background-color: #f5f5f5;
+    }
+    .option-text {
+        color: #333;
+        font-size: 16px;
+    }
+    .chevron {
+        color: #757575;
+        font-size: 20px;
+        transition: transform 0.3s;
+    }
+    .save-button {
+        background-color: #4285f4;
+        color: white;
+        border: none;
+        padding: 15px 0;
+        width: 100%;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .save-button:hover {
+        background-color: #3367d6;
+    }
+    .option-details {
+        display: none;
+        padding: 15px 20px;
+        background-color: #f9f9f9;
+        border-top: 1px solid #e0e0e0;
+    }
+    .option-details.show {
+        display: block;
+    }
+    .setting-item {
+        margin-bottom: 10px;
+    }
+    .setting-item label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    .setting-item input[type="text"],
+    .setting-item select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    .setting-item input[type="number"] {
+        width: calc(100% - 10px);
+    }
+    .setting-item input[type="checkbox"] {
+        margin-right: 5px;
+    }
+</style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h1>App Configuration</h1>
+            <ul class="option-list">
+                <li class="option-item" onclick="toggleOption(this, 'cloningOptions')"><span class="option-text">Cloning Options</span> <span class="chevron">›</span></li>
+                <div id="cloningOptions" class="option-details">
+                    <div class="setting-item"><label for="cloningMode">Cloning Mode:</label> <select id="cloningMode"> <option value="DEFAULT" selected>DEFAULT</option> <option value="MANIFEST">MANIFEST</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="manifestCompatibilityMode" checked> Manifest Compatibility Mode </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="skipAssetFiles"> Skip Asset Files </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="skipNativeLibraries"> Skip Native Libraries </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="nativeMethodWorkaround"> Native Method Workaround </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="ignoreCrashes"> Ignore Crashes </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="ignoreCrashesAdvancedMode"> Ignore Crashes Advanced Mode </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="ignoreCrashesShowCrashMessages"> Ignore Crashes Show Crash Messages </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableSignatureVerification"> Disable Signature Verification </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableLicenseValidation"> Disable License Validation </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="packageNameCheckWorkaround"> Package Name Check Workaround </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="googlePlayServicesWorkaround"> Google Play Services Workaround </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="hideGooglePlayServices"> Hide Google Play Services </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableRuntimeModdingOptions"> Disable Runtime Modding Options </label>
+                    </div>
+                    <div class="setting-item"><label for="hookFramework">Hook Framework:</label> <select id="hookFramework"> <option value="AUTO" selected>AUTO</option> <option value="MANUAL">MANUAL</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="earlyHooks"> Early Hooks </label>
+                    </div>
+                    <div class="setting-item"><label for="facebookLoginBehavior">Facebook Login Behavior:</label> <select id="facebookLoginBehavior"> <option value="WEB_ONLY" selected>WEB_ONLY</option> <option value="NATIVE">NATIVE</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="twitterLoginBehavior">Twitter Login Behavior:</label> <select id="twitterLoginBehavior"> <option value="WEB_ONLY" selected>WEB_ONLY</option> <option value="NATIVE">NATIVE</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="hideEmulator"> Hide Emulator </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="cloneCheckWorkaround"> Clone Check Workaround </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="processNameWorkaround"> Process Name Workaround </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="singleProcess"> Single Process </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="singleProcessSilent"> Single Process Silent </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="updateCheck"> Update Check </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="preventExternalUpdates"> Prevent External Updates </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="preventExternalUpdatesIncreaseVersionCode"> Prevent External Updates Increase Version Code </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="allowInMultiAccountApps"> Allow In Multi Account Apps </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="hideFromClonedApps"> Hide From Cloned Apps </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="noKill"> No Kill </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="noKillCrashWorkaround"> No Kill Crash Workaround </label>
+                    </div>
+                    <div class="setting-item"><label for="noKillCrashWorkaroundMethod">No Kill Crash Workaround Method:</label> <select id="noKillCrashWorkaroundMethod"> <option value="NOP" selected>NOP</option> <option value="ALTERNATIVE">ALTERNATIVE</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="noKillPreventFinishingActivities"> No Kill Prevent Finishing Activities </label>
+                    </div>
+                </div>
+                <li class="option-item" onclick="toggleOption(this, 'identityTrackingOptions')"><span class="option-text">Identity and Tracking Options</span> <span class="chevron">›</span></li>
+                <div id="identityTrackingOptions" class="option-details">
+                    <div class="setting-item"><label> <input type="checkbox" id="hideWifiInfo"> Hide WiFi Info </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="hideSimOperatorInfo"> Hide SIM Operator Info </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="hideGpuInfo"> Hide GPU Info </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="hideCpuInfo"> Hide CPU Info </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="hideDnsServers"> Hide DNS Servers </label>
+                    </div>
+                    <div class="setting-item"><label for="changeAdvertisingIdentifiers">Change Advertising Identifiers:</label> <select id="changeAdvertisingIdentifiers"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="changeAmazonAdvertisingId">Change Amazon Advertising ID:</label> <select id="changeAmazonAdvertisingId"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="changeAndroidId">Change Android ID:</label> <select id="changeAndroidId"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="changeAndroidSerial">Change Android Serial:</label> <select id="changeAndroidSerial"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="changeAppSetId">Change App Set ID:</label> <select id="changeAppSetId"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="changeWifiMacAddress">Change WiFi MAC Address:</label> <select id="changeWifiMacAddress"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="changeBluetoothMacAddress">Change Bluetooth MAC Address:</label> <select id="changeBluetoothMacAddress"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="changeEthernetMacAddress">Change Ethernet MAC Address:</label> <select id="changeEthernetMacAddress"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="changeFacebookAttributionId">Change Facebook Attribution ID:</label> <select id="changeFacebookAttributionId"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="changeGoogleAdvertisingId">Change Google Advertising ID:</label> <select id="changeGoogleAdvertisingId"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="changeGoogleServiceFrameworkId">Change Google Service Framework ID:</label> <select id="changeGoogleServiceFrameworkId"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="changeHuaweiAdvertisingId">Change Huawei Advertising ID:</label> <select id="changeHuaweiAdvertisingId"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="changeImei">Change IMEI:</label> <select id="changeImei"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="changeImsi">Change IMSI:</label> <select id="changeImsi"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="changeLocale">Change Locale:</label> <select id="changeLocale"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="changeOpenId">Change Open ID:</label> <select id="changeOpenId"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="newIdentity"> New Identity </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="newIdentityAutomaticallyRestartApp"> New Identity Automatically Restart App </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="newIdentityClearCache"> New Identity Clear Cache </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="newIdentityDeleteAppData"> New Identity Delete App Data </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="newIdentityShowNotification"> New Identity Show Notification </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="newIdentityPersistentNotification"> New Identity Persistent Notification </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="randomizeFileTimestamps"> Randomize File Timestamps </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="randomizeBootId"> Randomize Boot ID </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="randomizeBuildProps"> Randomize Build Props </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="filterDevicesDatabase"> Filter Devices Database </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="devicesDatabaseUseAndroidVersion"> Devices Database Use Android Version </label>
+                    </div>
+                    <div class="setting-item"><label for="randomizeBuildPropsDeviceNamePrefix">Randomize Build Props Device Name Prefix:</label> <input type="text" id="randomizeBuildPropsDeviceNamePrefix" value="My">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="randomizeDeviceUptime"> Randomize Device Uptime </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="randomizeDrmIdentifiers"> Randomize DRM Identifiers </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="randomizeInstallUpdateTime"> Randomize Install Update Time </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="randomizeBatteryLevel"> Randomize Battery Level </label>
+                    </div>
+                    <div class="setting-item"><label for="randomizeBatteryLevelMax">Randomize Battery Level Max:</label> <input type="number" id="randomizeBatteryLevelMax" value="100">
+                    </div>
+                    <div class="setting-item"><label for="randomizeBatteryLevelMin">Randomize Battery Level Min:</label> <input type="number" id="randomizeBatteryLevelMin" value="50">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="randomizeBatteryTemp"> Randomize Battery Temp </label>
+                    </div>
+                    <div class="setting-item"><label for="randomizeBatteryTempMax">Randomize Battery Temp Max:</label> <input type="number" id="randomizeBatteryTempMax" value="40">
+                    </div>
+                    <div class="setting-item"><label for="randomizeBatteryTempMin">Randomize Battery Temp Min:</label> <input type="number" id="randomizeBatteryTempMin" value="20">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="randomizeTotalFreeMemory"> Randomize Total Free Memory </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="randomizeTotalFreeStorage"> Randomize Total Free Storage </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="randomizeUserCreationTime"> Randomize User Creation Time </label>
+                    </div>
+                </div>
+                <li class="option-item" onclick="toggleOption(this, 'privacyOptions')"><span class="option-text">Privacy Options</span> <span class="chevron">›</span></li>
+                <div id="privacyOptions" class="option-details">
+                    <div class="setting-item"><label> <input type="checkbox" id="passwordProtectApp"> Password Protect App </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="patternLockApp"> Pattern Lock App </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="otpProtectApp"> OTP Protect App </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="stealthMode"> Stealth Mode </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="stealthModeUseFingerprint"> Stealth Mode Use Fingerprint </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="allowScreenshots"> Allow Screenshots </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="allowSharingImages"> Allow Sharing Images </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableClipboardReadAccess"> Disable Clipboard Read Access </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableClipboardWriteAccess"> Disable Clipboard Write Access </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableContactsAccess"> Disable Contacts Access </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableDeviceAdmin"> Disable Device Admin </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableSensorsAccess"> Disable Sensors Access </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableShareActions"> Disable Share Actions </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="hideAllInstalledApps"> Hide All Installed Apps </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="spoofRandomLocation"> Spoof Random Location </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="spoofLocationUseIpLocation"> Spoof Location Use IP Location </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="spoofLocationApi"> Spoof Location API </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="spoofLocationCalculateBearing"> Spoof Location Calculate Bearing </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="spoofLocationCompatibilityMode"> Spoof Location Compatibility Mode </label>
+                    </div>
+                    <div class="setting-item"><label for="spoofLocationInterval">Spoof Location Interval:</label> <input type="number" id="spoofLocationInterval" value="10">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="spoofLocationShareLocationReceiver"> Spoof Location Share Location Receiver </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="spoofLocationShowSpoofLocationNotification"> Spoof Location Show Spoof Location Notification </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="spoofLocationSimulatePositionalUncertainty"> Spoof Location Simulate Positional Uncertainty </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="favoriteLocationsShowDistance"> Favorite Locations Show Distance </label>
+                    </div>
+                    <div class="setting-item"><label for="spoofGpsTrackDuration">Spoof GPS Track Duration:</label> <input type="number" id="spoofGpsTrackDuration" value="60.0" step="0.1">
+                    </div>
+                    <div class="setting-item"><label for="spoofGpsTrackIndex">Spoof GPS Track Index:</label> <input type="number" id="spoofGpsTrackIndex" value="0">
+                    </div>
+                    <div class="setting-item"><label for="spoofGpsTrackPlaybackMode">Spoof GPS Track Playback Mode:</label> <select id="spoofGpsTrackPlaybackMode"> <option value="LOOP" selected>LOOP</option> <option value="ONCE">ONCE</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="spoofGpsTrackStartInPausedMode"> Spoof GPS Track Start in Paused Mode </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="spoofGpsTrackUseElevationFromFile"> Spoof GPS Track Use Elevation From File </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="hideRoot"> Hide Root </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="hideVpnConnection"> Hide VPN Connection </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="hideProxyConnection"> Hide Proxy Connection </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="preventScreenshotDetection"> Prevent Screenshot Detection </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="autoIncognitoMode"> Auto Incognito Mode </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="incognitoKeyboard"> Incognito Keyboard </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="incognitoMode"> Incognito Mode </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="persistentClipboard"> Persistent Clipboard </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="privateClipboard"> Private Clipboard </label>
+                    </div>
+                    <div class="setting-item"><label for="fakeDateDay">Fake Date Day:</label> <input type="number" id="fakeDateDay" value="0">
+                    </div>
+                    <div class="setting-item"><label for="fakeDateIncrementDateByDays">Fake Date Increment Date By Days:</label> <input type="number" id="fakeDateIncrementDateByDays" value="1">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="fakeDateIncrementDateOnExit"> Fake Date Increment Date On Exit </label>
+                    </div>
+                    <div class="setting-item"><label for="fakeDateMonth">Fake Date Month:</label> <input type="number" id="fakeDateMonth" value="0">
+                    </div>
+                    <div class="setting-item"><label for="fakeDateYear">Fake Date Year:</label> <input type="number" id="fakeDateYear" value="0">
+                    </div>
+                    <div class="setting-item"><label for="fakeWifiNetworks">Fake WiFi Networks:</label> <input type="text" id="fakeWifiNetworks" value="">
+                    </div>
+                    <div class="setting-item"><label for="favoriteLocations">Favorite Locations:</label> <input type="text" id="favoriteLocations" value="">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="bypassAccessibilityServiceCheck"> Bypass Accessibility Service Check </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="preventScreenshots"> Prevent Screenshots </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="preventScreenshotDetectionAdvancedMode"> Prevent Screenshot Detection Advanced Mode </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="preventScreenshotDetectionAndroid14Support"> Prevent Screenshot Detection Android 14 Support </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="preventScreenRecordingDetection"> Prevent Screen Recording Detection </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="hideAllInstalledAppsExceptions"> Hide All Installed Apps Exceptions </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="hideAppCloner"> Hide App Cloner </label>
+                    </div>
+                    <div class="setting-item"><label for="hideOtherApps">Hide Other Apps:</label> <input type="text" id="hideOtherApps" value="">
+                    </div>
+                    <div class="setting-item"><label for="hideOtherAppsSubstrings">Hide Other Apps Substrings:</label> <input type="text" id="hideOtherAppsSubstrings" value="">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="hidePowerSavingMode"> Hide Power Saving Mode </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="hidePasswordCharacters"> Hide Password Characters </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="panicModeAdbDebuggingEnabled"> Panic Mode ADB Debugging Enabled </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="panicModeMockLocationDetected"> Panic Mode Mock Location Detected </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="panicModeRootDetected"> Panic Mode Root Detected </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="panicModeShowNotification"> Panic Mode Show Notification </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="panicModeUnauthorized"> Panic Mode Unauthorized </label>
+                    </div>
+                    <div class="setting-item"><label for="panicModeUnauthorizedMaxAttempts">Panic Mode Unauthorized Max Attempts:</label> <input type="number" id="panicModeUnauthorizedMaxAttempts" value="3">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="panicModeUsbDeviceAttached"> Panic Mode USB Device Attached </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableLogcatLogging"> Disable Logcat Logging </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableInAppReviews"> Disable In-App Reviews </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableAccessibilityServices"> Disable Accessibility Services </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableAccountsAccess"> Disable Accounts Access </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableCalendarAccess"> Disable Calendar Access </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableCallLogSmsAccess"> Disable Call Log SMS Access </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disablePhotoMediaAccess"> Disable Photo Media Access </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableUsbAccessoryModeEvents"> Disable USB Accessory Mode Events </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableUsbHostModeEvents"> Disable USB Host Mode Events </label>
+                    </div>
+                </div>
+                <li class="option-item" onclick="toggleOption(this, 'displayOptions')"><span class="option-text">Display Options</span> <span class="chevron">›</span></li>
+                <div id="displayOptions" class="option-details">
+                    <div class="setting-item"><label>Add Padding:</label> <input type="checkbox" id="addPaddingEnabled"> <label for="addPaddingBackgroundColor">Background Color:</label> <input type="number" id="addPaddingBackgroundColor" value="0"> <label for="addPaddingBottomPadding">Bottom Padding:</label> <input type="number" id="addPaddingBottomPadding" value="0"> <label for="addPaddingLeftPadding">Left Padding:</label> <input type="number" id="addPaddingLeftPadding" value="0"> <label for="addPaddingRightPadding">Right Padding:</label> <input type="number" id="addPaddingRightPadding" value="0"> <label for="addPaddingTopPadding">Top Padding:</label> <input type="number" id="addPaddingTopPadding" value="0"> <label> <input type="checkbox" id="addPaddingSetValuesIndividually"> Set Values Individually </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="addSnow"> Add Snow </label>
+                    </div>
+                    <div class="setting-item"><label for="snowColor">Snow Color:</label> <input type="number" id="snowColor" value="-1">
+                    </div>
+                    <div class="setting-item"><label for="snowCount">Snow Count:</label> <input type="number" id="snowCount" value="150">
+                    </div>
+                    <div class="setting-item"><label for="snowCustomSymbols">Snow Custom Symbols:</label> <input type="text" id="snowCustomSymbols" value="❉❇❈❊❅">
+                    </div>
+                    <div class="setting-item"><label for="snowFadeBegin">Snow Fade Begin:</label> <input type="number" id="snowFadeBegin" value="1.0" step="0.1">
+                    </div>
+                    <div class="setting-item"><label for="snowFadeEnd">Snow Fade End:</label> <input type="number" id="snowFadeEnd" value="1.0" step="0.1">
+                    </div>
+                    <div class="setting-item"><label for="snowOpacity">Snow Opacity:</label> <input type="number" id="snowOpacity" value="1.0" step="0.1">
+                    </div>
+                    <div class="setting-item"><label for="snowSize">Snow Size:</label> <select id="snowSize"> <option value="MEDIUM" selected>MEDIUM</option> <option value="SMALL">SMALL</option> <option value="LARGE">LARGE</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="snowSpeed">Snow Speed:</label> <select id="snowSpeed"> <option value="NORMAL" selected>NORMAL</option> <option value="SLOW">SLOW</option> <option value="FAST">FAST</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="snowUseCustomSymbols"> Use Custom Snow Symbols </label>
+                    </div>
+                    <div class="setting-item"><label for="fontScale">Font Scale:</label> <input type="number" id="fontScale" value="1.0" step="0.1">
+                    </div>
+                    <div class="setting-item"><label for="allowDarkMode">Allow Dark Mode:</label> <select id="allowDarkMode"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="invertColorsDarkMode"> Invert Colors Dark Mode </label>
+                    </div>
+                    <div class="setting-item"><label for="invertColorsDarkModeEndTime">Invert Colors Dark Mode End Time:</label> <input type="time" id="invertColorsDarkModeEndTime" value="07:00">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="invertColorsDarkModeExcludeWebViews"> Invert Colors Dark Mode Exclude Web Views </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="invertColorsDarkModeSchedule"> Invert Colors Dark Mode Schedule </label>
+                    </div>
+                    <div class="setting-item"><label for="invertColorsDarkModeStartTime">Invert Colors Dark Mode Start Time:</label> <input type="time" id="invertColorsDarkModeStartTime" value="21:00">
+                    </div>
+                    <div class="setting-item"><label for="rotationLock">Rotation Lock:</label> <select id="rotationLock"> <option value="NONE" selected>NONE</option> <option value="PORTRAIT">PORTRAIT</option> <option value="LANDSCAPE">LANDSCAPE</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="largerAspectRatios">Larger Aspect Ratios:</label> <select id="largerAspectRatios"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="largerAspectRatiosAllowOverride"> Larger Aspect Ratios Allow Override </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="pictureInPictureSupport"> Picture in Picture Support </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="pictureInPictureNotification"> Picture in Picture Notification </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="pictureInPictureLongPress"> Picture in Picture Long Press </label>
+                    </div>
+                    <div class="setting-item"><label for="pictureInPictureKeyCode">Picture in Picture Key Code:</label> <input type="number" id="pictureInPictureKeyCode" value="0">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="multiWindow"> Multi Window </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="skipDialogsMonitorStacktraces"> Skip Dialogs Monitor Stacktraces </label>
+                    </div>
+                    <div class="setting-item"><label for="hideMenuItemsStrings">Hide Menu Items Strings:</label> <input type="text" id="hideMenuItemsStrings" value="">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="immersiveModeIgnoreNotch"> Immersive Mode Ignore Notch </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="preventFloatingPopups"> Prevent Floating Popups </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="preventFloatingPopupsAllowDialogs"> Prevent Floating Popups Allow Dialogs </label>
+                    </div>
+                    <div class="setting-item"><label for="lightStatusBar">Light Status Bar:</label> <select id="lightStatusBar"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="flipScreenHorizontally"> Flip Screen Horizontally </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="flipScreenVertically"> Flip Screen Vertically </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="keepScreenOn"> Keep Screen On </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="showTouches"> Show Touches </label>
+                    </div>
+                    <div class="setting-item"><label for="webViewTextZoom">Web View Text Zoom:</label> <input type="number" id="webViewTextZoom" value="1.0" step="0.1">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="floatingApp"> Floating App </label>
+                    </div>
+                    <div class="setting-item"><label for="floatingAppIconSize">Floating App Icon Size:</label> <select id="floatingAppIconSize"> <option value="MEDIUM" selected>MEDIUM</option> <option value="SMALL">SMALL</option> <option value="LARGE">LARGE</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="floatingAppLowerTargetSdk"> Floating App Lower Target SDK </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="floatingAppNotchMargin"> Floating App Notch Margin </label>
+                    </div>
+                    <div class="setting-item"><label for="floatingAppOpacity">Floating App Opacity:</label> <input type="number" id="floatingAppOpacity" value="1.0" step="0.1">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="inAppLiveChat"> In-App Live Chat </label>
+                    </div>
+                    <div class="setting-item"><label for="inAppLiveChatOpacity">In-App Live Chat Opacity:</label> <input type="number" id="inAppLiveChatOpacity" value="1.0" step="0.1">
+                    </div>
+                    <div class="setting-item"><label for="welcomeMessageDelay">Welcome Message Delay:</label> <input type="number" id="welcomeMessageDelay" value="2000">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="welcomeMessageEnablePlaceholders"> Welcome Message Enable Placeholders </label>
+                    </div>
+                    <div class="setting-item"><label for="welcomeMessageMode">Welcome Message Mode:</label> <select id="welcomeMessageMode"> <option value="DIALOG" selected>DIALOG</option> <option value="BANNER">BANNER</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="welcomeMessageShowDialogAlways"> Welcome Message Show Dialog Always </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="welcomePopupImage"> Welcome Popup Image </label>
+                    </div>
+                    <div class="setting-item"><label for="welcomePopupImageDuration">Welcome Popup Image Duration:</label> <input type="number" id="welcomePopupImageDuration" value="3.0" step="0.1">
+                    </div>
+                    <div class="setting-item"><label for="welcomePopupImageWidth">Welcome Popup Image Width:</label> <input type="number" id="welcomePopupImageWidth" value="0.8" step="0.1">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="invertToasts"> Invert Toasts </label>
+                    </div>
+                    <div class="setting-item"><label for="screenSaverDelayMinutes">Screen Saver Delay Minutes:</label> <input type="number" id="screenSaverDelayMinutes" value="0">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="screenSaverExitApp"> Screen Saver Exit App </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="screenSaverMuteVolume"> Screen Saver Mute Volume </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="splashScreen"> Splash Screen </label>
+                    </div>
+                    <div class="setting-item"><label for="splashScreenBackgroundColor">Splash Screen Background Color:</label> <input type="number" id="splashScreenBackgroundColor" value="-1">
+                    </div>
+                    <div class="setting-item"><label for="splashScreenBackgroundOpacity">Splash Screen Background Opacity:</label> <input type="number" id="splashScreenBackgroundOpacity" value="1.0" step="0.1">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="splashScreenCenterCropImage"> Splash Screen Center Crop Image </label>
+                    </div>
+                    <div class="setting-item"><label for="splashScreenDuration">Splash Screen Duration:</label> <input type="number" id="splashScreenDuration" value="3">
+                    </div>
+                    <div class="setting-item"><label for="splashScreenMargin">Splash Screen Margin:</label> <input type="number" id="splashScreenMargin" value="0.3" step="0.1">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableNestedScrolling"> Disable Nested Scrolling </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableHardwareAcceleration"> Disable Hardware Acceleration </label>
+                    </div>
+                    <div class="setting-item"><label for="blurImageViewsMode">Blur Image Views Mode:</label> <select id="blurImageViewsMode"> <option value="TAP" selected>TAP</option> <option value="HOLD">HOLD</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="blurImageViewsStrength">Blur Image Views Strength:</label> <select id="blurImageViewsStrength"> <option value="DISABLED" selected>DISABLED</option> <option value="LOW">LOW</option> <option value="MEDIUM">MEDIUM</option> <option value="HIGH">HIGH</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="noRelayoutOnRotation"> No Relayout on Rotation </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableFullscreenEditing"> Disable Fullscreen Editing </label>
+                    </div>
+                    <div class="setting-item"><label for="rtlSupport">RTL Support:</label> <select id="rtlSupport"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="activityTransitions">Activity Transitions:</label> <select id="activityTransitions"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="tiltText">Tilt Text:</label> <input type="number" id="tiltText" value="0">
+                    </div>
+                </div>
+                <li class="option-item" onclick="toggleOption(this, 'mediaOptions')"><span class="option-text">Media Options</span> <span class="chevron">›</span></li>
+                <div id="mediaOptions" class="option-details">
+                    <div class="setting-item"><label> <input type="checkbox" id="muteOnStart"> Mute On Start </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="muteWhileInForeground"> Mute While In Foreground </label>
+                    </div>
+                    <div class="setting-item"><label for="muteForTextOnScreen">Mute For Text On Screen:</label> <input type="text" id="muteForTextOnScreen" value="">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="setVolumeOnStart"> Set Volume On Start </label>
+                    </div>
+                    <div class="setting-item"><label for="setVolumeOnStartMaxVolume">Set Volume On Start Max Volume:</label> <input type="number" id="setVolumeOnStartMaxVolume" value="15">
+                    </div>
+                    <div class="setting-item"><label for="setVolumeOnStartMinVolume">Set Volume On Start Min Volume:</label> <input type="number" id="setVolumeOnStartMinVolume" value="10">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="setVolumeOnStartRandomRange"> Set Volume On Start Random Range </label>
+                    </div>
+                    <div class="setting-item"><label for="setVolumeOnStartVolume">Set Volume On Start Volume:</label> <input type="number" id="setVolumeOnStartVolume" value="10">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="preventAppFromChangingVolume"> Prevent App From Changing Volume </label>
+                    </div>
+                    <div class="setting-item"><label for="audioPlaybackCapture">Audio Playback Capture:</label> <select id="audioPlaybackCapture"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableChromecastButton"> Disable Chromecast Button </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="hideScreenMirroring"> Hide Screen Mirroring </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableCameras"> Disable Cameras </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="fakeCamera"> Fake Camera </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="fakeCameraAddPictureAttributes"> Fake Camera Add Picture Attributes </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="fakeCameraAddSpoofedLocation"> Fake Camera Add Spoofed Location </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="fakeCameraAlternativeMode"> Fake Camera Alternative Mode </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="fakeCameraAppSupport"> Fake Camera App Support </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="fakeCameraCloseStreamWorkaround"> Fake Camera Close Stream Workaround </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="fakeCameraFlipHorizontally"> Fake Camera Flip Horizontally </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="fakeCameraOpenStreamWorkaround"> Fake Camera Open Stream Workaround </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="fakeCameraRandomizePicture"> Fake Camera Randomize Picture </label>
+                    </div>
+                    <div class="setting-item"><label for="fakeCameraRandomizePictureStrength">Fake Camera Randomize Picture Strength:</label> <input type="number" id="fakeCameraRandomizePictureStrength" value="25">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="fakeCameraResizePicture"> Fake Camera Resize Picture </label>
+                    </div>
+                    <div class="setting-item"><label for="fakeCameraRotation">Fake Camera Rotation:</label> <select id="fakeCameraRotation"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="keepPlayingMedia"> Keep Playing Media </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="showOnLockScreen"> Show On Lock Screen </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="showOnSecondaryDisplay"> Show On Secondary Display </label>
+                    </div>
+                    <div class="setting-item"><label for="showOnSecondaryDisplayActivitiesNames">Show On Secondary Display Activities Names:</label> <input type="text" id="showOnSecondaryDisplayActivitiesNames" value="">
+                    </div>
+                    <div class="setting-item"><label for="showRoundTripTime">Show Round Trip Time:</label> <select id="showRoundTripTime"> <option value="DISABLED" selected>DISABLED</option> <option value="ENABLED">ENABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="showStreamVideoViewsOnTop"> Show Stream Video Views On Top </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="showStreamVideoViewsOnTopImmersiveMode"> Show Stream Video Views On Top Immersive Mode </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="muteMic"> Mute Mic </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="normalAudioMode"> Normal Audio Mode </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="startSound"> Start Sound </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableMediaBrowserService"> Disable Media Browser Service </label>
+                    </div>
+                </div>
+                <li class="option-item" onclick="toggleOption(this, 'navigationOptions')"><span class="option-text">Navigation Options</span> <span class="chevron">›</span></li>
+                <div id="navigationOptions" class="option-details">
+                    <div class="setting-item"><label> <input type="checkbox" id="backAlwaysFinishes"> Back Always Finishes </label>
+                    </div>
+                    <div class="setting-item"><label for="minimizeOnBack">Minimize On Back:</label> <select id="minimizeOnBack"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="activityMonitor"> Activity Monitor </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="blockActivitiesAfterCreation"> Block Activities After Creation </label>
+                    </div>
+                    <div class="setting-item"><label for="blockActivitiesNames">Block Activities Names:</label> <input type="text" id="blockActivitiesNames" value="">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="blockActivitiesPreventFinishingActivities"> Block Activities Prevent Finishing Activities </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="popupBlocker"> Popup Blocker </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="popupBlockerSilent"> Popup Blocker Silent </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="swipeToGoBack"> Swipe To Go Back </label>
+                    </div>
+                    <div class="setting-item"><label for="swipeToGoBackBorder">Swipe To Go Back Border:</label> <select id="swipeToGoBackBorder"> <option value="LEFT" selected>LEFT</option> <option value="RIGHT">RIGHT</option> <option value="TOP">TOP</option> <option value="BOTTOM">BOTTOM</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="swipeToGoBackDirection">Swipe To Go Back Direction:</label> <select id="swipeToGoBackDirection"> <option value="RIGHT" selected>RIGHT</option> <option value="LEFT">LEFT</option> <option value="UP">UP</option> <option value="DOWN">DOWN</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="shakeAction">Shake Action:</label> <select id="shakeAction"> <option value="NONE" selected>NONE</option> <option value="BACK">BACK</option> <option value="HOME">HOME</option> <option value="RECENTS">RECENTS</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="fingerprintLongTapAction">Fingerprint Long Tap Action:</label> <select id="fingerprintLongTapAction"> <option value="NONE" selected>NONE</option> <option value="BACK">BACK</option> <option value="HOME">HOME</option> <option value="RECENTS">RECENTS</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="fingerprintTapAction">Fingerprint Tap Action:</label> <select id="fingerprintTapAction"> <option value="NONE" selected>NONE</option> <option value="BACK">BACK</option> <option value="HOME">HOME</option> <option value="RECENTS">RECENTS</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="pressBackAgainToExit"> Press Back Again To Exit </label>
+                    </div>
+                    <div class="setting-item"><label for="longPressBackAction">Long Press Back Action:</label> <select id="longPressBackAction"> <option value="NONE" selected>NONE</option> <option value="BACK">BACK</option> <option value="HOME">HOME</option> <option value="RECENTS">RECENTS</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="longPressBackForOptionsMenu"> Long Press Back For Options Menu </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="floatingBackButton"> Floating Back Button </label>
+                    </div>
+                    <div class="setting-item"><label for="floatingBackButtonColor">Floating Back Button Color:</label> <input type="number" id="floatingBackButtonColor" value="-7829368">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="floatingBackButtonDoubleBackTap"> Floating Back Button Double Back Tap </label>
+                    </div>
+                    <div class="setting-item"><label for="floatingBackButtonLongPressAction">Floating Back Button Long Press Action:</label> <select id="floatingBackButtonLongPressAction"> <option value="NONE" selected>NONE</option> <option value="BACK">BACK</option> <option value="HOME">HOME</option> <option value="RECENTS">RECENTS</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="floatingBackButtonOpacity">Floating Back Button Opacity:</label> <input type="number" id="floatingBackButtonOpacity" value="0.5" step="0.1">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="floatingBackButtonPositionPerScreen"> Floating Back Button Position Per Screen </label>
+                    </div>
+                    <div class="setting-item"><label for="floatingBackButtonSize">Floating Back Button Size:</label> <select id="floatingBackButtonSize"> <option value="MEDIUM" selected>MEDIUM</option> <option value="SMALL">SMALL</option> <option value="LARGE">LARGE</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="kioskMode">Kiosk Mode:</label> <select id="kioskMode"> <option value="DISABLED" selected>DISABLED</option> <option value="ENABLED">ENABLED</option> </select>
+                    </div>
+                </div>
+                <li class="option-item" onclick="toggleOption(this, 'webViewOptions')"><span class="option-text">WebView Options</span> <span class="chevron">›</span></li>
+                <div id="webViewOptions" class="option-details">
+                    <div class="setting-item"><label for="changeWebViewUserAgent">Change WebView User Agent:</label> <select id="changeWebViewUserAgent"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="CUSTOM">CUSTOM</option> <option value="RANDOM">RANDOM</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="customWebViewUserAgent">Custom WebView User Agent:</label> <input type="text" id="customWebViewUserAgent" value="Mozilla/5.0 (Linux; Android {system-property:ro.build.version.release}; {system-property:ro.product.model} Build/{system-property:ro.build.id}; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/128.0.****.### Mobile Safari/537.36">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="geckoViewSupport"> GeckoView Support </label>
+                    </div>
+                    <div class="setting-item"><label for="changeSystemUserAgent">Change System User Agent:</label> <select id="changeSystemUserAgent"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="CUSTOM">CUSTOM</option> <option value="RANDOM">RANDOM</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="customSystemUserAgent">Custom System User Agent:</label> <input type="text" id="customSystemUserAgent" value="Dalvik/2.1.0 (Linux; U; Android {system-property:ro.build.version.release}; {system-property:ro.product.model} Build/{system-property:ro.build.id})">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="userAgentWorkaround"> User Agent Workaround </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="userAgentWorkaroundSilent"> User Agent Workaround Silent </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="webViewDisableAudioContext"> WebView Disable Audio Context </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="webViewDisableWebGl"> WebView Disable WebGL </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="webViewDisableWebRtc"> WebView Disable WebRTC </label>
+                    </div>
+                    <div class="setting-item"><label for="webViewTextZoom">WebView Text Zoom:</label> <input type="number" id="webViewTextZoom" value="1.0" step="0.1">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="webViewMetricsOptOut"> WebView Metrics Opt Out </label>
+                    </div>
+                    <div class="setting-item"><label for="webViewOverrideUrlLoadingList">WebView Override URL Loading List:</label> <input type="text" id="webViewOverrideUrlLoadingList" value="">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="webViewUrlDataMonitor"> WebView URL Data Monitor </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="webViewUrlDataMonitorAutoCopy"> WebView URL Data Monitor Auto Copy </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="webViewUrlDataMonitorAutoOpen"> WebView URL Data Monitor Auto Open </label>
+                    </div>
+                    <div class="setting-item"><label for="webViewUrlDataMonitorFilter">WebView URL Data Monitor Filter:</label> <select id="webViewUrlDataMonitorFilter"> <option value="DISABLED" selected>DISABLED</option> <option value="ENABLED">ENABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="webViewUrlDataMonitorFilterStrings">WebView URL Data Monitor Filter Strings:</label> <input type="text" id="webViewUrlDataMonitorFilterStrings" value="">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="webViewUrlDataMonitorShowJavaScriptUrls"> WebView URL Data Monitor Show JavaScript URLs </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="webViewUrlDataMonitorShowOverrideUrlLoading"> WebView URL Data Monitor Show Override URL Loading </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="webViewUrlDataMonitorUrlDecode"> WebView URL Data Monitor URL Decode </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="webViewUrlEditor"> WebView URL Editor </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="showWebViewIFrameSourceCode"> Show WebView IFrame Source Code </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="showWebViewSourceCode"> Show WebView Source Code </label>
+                    </div>
+                    <div class="setting-item"><label for="showWebViewSourceCodeFilter">Show WebView Source Code Filter:</label> <select id="showWebViewSourceCodeFilter"> <option value="DISABLED" selected>DISABLED</option> <option value="ENABLED">ENABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="showWebViewSourceCodeFilterStrings">Show WebView Source Code Filter Strings:</label> <input type="text" id="showWebViewSourceCodeFilterStrings" value="">
+                    </div>
+                </div>
+                <li class="option-item" onclick="toggleOption(this, 'storageOptions')"><span class="option-text">Storage Options</span> <span class="chevron">›</span></li>
+                <div id="storageOptions" class="option-details">
+                    <div class="setting-item"><label> <input type="checkbox" id="installToSdCard"> Install To SD Card </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="redirectExternalStorage"> Redirect External Storage </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="accessibleDataDirectory"> Accessible Data Directory </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="accessibleDataDirectoryAdvancedMode"> Accessible Data Directory Advanced Mode </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="clearCacheOnExit"> Clear Cache On Exit </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="clearCacheWhenLowOnStorage"> Clear Cache When Low On Storage </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="requestAllFilesAccessPermission"> Request All Files Access Permission </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="securelyDeleteFilesDirectoriesOnExit"> Securely Delete Files/Directories On Exit </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="promptKeepAppDataOnUninstall"> Prompt Keep App Data On Uninstall </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="bundleAppData"> Bundle App Data </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="restoreAppDataOnEveryStart"> Restore App Data On Every Start </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="bundleAppDataEncryptCertificate"> Bundle App Data Encrypt Certificate </label>
+                    </div>
+                    <div class="setting-item"><label for="bundleFilesDirectories">Bundle Files/Directories:</label> <input type="text" id="bundleFilesDirectories" value="">
+                    </div>
+                    <div class="setting-item"><label for="bundleInternalFilesDirectories">Bundle Internal Files/Directories:</label> <input type="text" id="bundleInternalFilesDirectories" value="">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="bundleOriginalApp"> Bundle Original App </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="fileAccessMonitor"> File Access Monitor </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableSpaceManagement"> Disable Space Management </label>
+                    </div>
+                    <div class="setting-item"><label for="deleteFilesDirectoriesOnExit">Delete Files/Directories On Exit:</label> <input type="text" id="deleteFilesDirectoriesOnExit" value="">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="preserveExpansionFiles"> Preserve Expansion Files </label>
+                    </div>
+                </div>
+                <li class="option-item" onclick="toggleOption(this, 'launchingOptions')"><span class="option-text">Launching Options</span> <span class="chevron">›</span></li>
+                <div id="launchingOptions" class="option-details">
+                    <div class="setting-item"><label> <input type="checkbox" id="disableWidgets"> Disable Widgets </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="removeLauncherIcon"> Remove Launcher Icon </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="removeLauncherIconAndroidTv"> Remove Launcher Icon Android TV </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="removeLauncherIconProtectFromShortcutMakers"> Remove Launcher Icon Protect From Shortcut Makers </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="removeLauncherIconShortcuts"> Remove Launcher Icon Shortcuts </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="showInPowerMenu"> Show In Power Menu </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="showOnLockScreen"> Show On Lock Screen </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="persistentApp"> Persistent App </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="persistentAppAccessibilityService"> Persistent App Accessibility Service </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="noBackgroundServices"> No Background Services </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="forceCloseOnExit"> Force Close On Exit </label>
+                    </div>
+                    <div class="setting-item"><label for="fileUrlAssociations">File URL Associations:</label> <input type="text" id="fileUrlAssociations" value="">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="fileUrlAssociationsEnablePlaceholders"> File URL Associations Enable Placeholders </label>
+                    </div>
+                    <div class="setting-item"><label for="autoStart">Auto Start:</label> <select id="autoStart"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="launchQuickSettingsTile"> Launch Quick Settings Tile </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="launchWithNfcTag"> Launch With NFC Tag </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="exitAppIfPasswordIncorrect"> Exit App If Password Incorrect </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="exitAppOnScreenOff"> Exit App On Screen Off </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="exitAppWhenStorageUnmounted"> Exit App When Storage Unmounted </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="launchAppWhenStorageMounted"> Launch App When Storage Mounted </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="documentLaunchMode"> Document Launch Mode </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableWakeLocks"> Disable Wake Locks </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="makeHomeApp"> Make Home App </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="makeAssistApp"> Make Assist App </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="makeCameraApp"> Make Camera App </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="requestAllPermissions"> Request All Permissions </label>
+                    </div>
+                    <div class="setting-item"><label for="requestPermissions">Request Permissions:</label> <input type="text" id="requestPermissions" value="">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="requestIgnoreBatteryOptimizations"> Request Ignore Battery Optimizations </label>
+                    </div>
+                </div>
+                <li class="option-item" onclick="toggleOption(this, 'networkingOptions')"><span class="option-text">Networking Options</span> <span class="chevron">›</span></li>
+                <div id="networkingOptions" class="option-details">
+                    <div class="setting-item"><label> <input type="checkbox" id="disableAllNetworking"> Disable All Networking </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableMobileData"> Disable Mobile Data </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="httpProxy"> HTTP Proxy </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="hideMobileHotspot"> Hide Mobile Hotspot </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="hideCaCerts"> Hide CA Certs </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="hideLinkAddress"> Hide Link Address </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="hostMapperSilent"> Host Mapper Silent </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="hostsBlocker"> Hosts Blocker </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="hostsBlockerAllowAllOtherHosts"> Hosts Blocker Allow All Other Hosts </label>
+                    </div>
+                    <div class="setting-item"><label for="overrideBindAddress">Override Bind Address:</label> <select id="overrideBindAddress"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableClearTextNetworking"> Disable Clear Text Networking </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableNetworkingWhenScreenOff"> Disable Networking When Screen Off </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableNetworkingWithoutVpn"> Disable Networking Without VPN </label>
+                    </div>
+                    <div class="setting-item"><label for="mockEthernetConnection">Mock Ethernet Connection:</label> <select id="mockEthernetConnection"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="mockMobileConnection">Mock Mobile Connection:</label> <select id="mockMobileConnection"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="mockWifiConnection">Mock WiFi Connection:</label> <select id="mockWifiConnection"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="useSocksVpnService"> Use SOCKS VPN Service </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="socksProxy"> SOCKS Proxy </label>
+                    </div>
+                    <div class="setting-item"><label for="socksProxyHost">SOCKS Proxy Host:</label> <input type="text" id="socksProxyHost" value="">
+                    </div>
+                    <div class="setting-item"><label for="socksProxyPort">SOCKS Proxy Port:</label> <input type="number" id="socksProxyPort" value="1080">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="socksProxyAlternativeMode"> SOCKS Proxy Alternative Mode </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="socksProxyApi"> SOCKS Proxy API </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="socksProxyEnablePlaceholders"> SOCKS Proxy Enable Placeholders </label>
+                    </div>
+                    <div class="setting-item"><label for="socksProxyList">SOCKS Proxy List:</label> <input type="text" id="socksProxyList" value="">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="socksProxyListRandomProxy"> SOCKS Proxy List Random Proxy </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="socksProxyListShowProxySelectorNotification"> SOCKS Proxy List Show Proxy Selector Notification </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="socksProxySilent"> SOCKS Proxy Silent </label>
+                    </div>
+                    <div class="setting-item"><label for="dnsOverHttps">DNS Over HTTPS:</label> <select id="dnsOverHttps"> <option value="DISABLED" selected>DISABLED</option> <option value="ENABLED">ENABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="dnsOverHttpsCustomUrl">DNS Over HTTPS Custom URL:</label> <input type="text" id="dnsOverHttpsCustomUrl" value="https://doh.opendns.com/dns-query">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="dnsOverHttpsSilent"> DNS Over HTTPS Silent </label>
+                    </div>
+                </div>
+                <li class="option-item" onclick="toggleOption(this, 'notificationOptions')"><span class="option-text">Notification Options</span> <span class="chevron">›</span></li>
+                <div id="notificationOptions" class="option-details">
+                    <div class="setting-item"><label> <input type="checkbox" id="blockAllNotifications"> Block All Notifications </label>
+                    </div>
+                    <div class="setting-item"><label for="notificationPriority">Notification Priority:</label> <select id="notificationPriority"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="HIGH">HIGH</option> <option value="LOW">LOW</option> <option value="MAX">MAX</option> <option value="MIN">MIN</option> <option value="DEFAULT">DEFAULT</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="notificationSound">Notification Sound:</label> <select id="notificationSound"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="notificationQuietTime"> Notification Quiet Time </label>
+                    </div>
+                    <div class="setting-item"><label for="notificationQuietTimeEnd">Notification Quiet Time End:</label> <input type="time" id="notificationQuietTimeEnd" value="07:00">
+                    </div>
+                    <div class="setting-item"><label for="notificationQuietTimeStart">Notification Quiet Time Start:</label> <input type="time" id="notificationQuietTimeStart" value="21:00">
+                    </div>
+                    <div class="setting-item"><label for="notificationSnoozeTimeout">Notification Snooze Timeout:</label> <input type="number" id="notificationSnoozeTimeout" value="0">
+                    </div>
+                    <div class="setting-item"><label for="notificationTimeout">Notification Timeout:</label> <input type="number" id="notificationTimeout" value="0">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="notificationTintStatusBarIcon"> Notification Tint Status Bar Icon </label>
+                    </div>
+                    <div class="setting-item"><label for="ongoingNotifications">Ongoing Notifications:</label> <select id="ongoingNotifications"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="ENABLED">ENABLED</option> <option value="DISABLED">DISABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="notificationsAddMuteBlockActions"> Notifications Add Mute/Block Actions </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="notificationColorUseStatusBarColor"> Notification Color Use Status Bar Color </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="notificationDots"> Notification Dots </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="simpleNotifications"> Simple Notifications </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="singleNotificationGroup"> Single Notification Group </label>
+                    </div>
+                    <div class="setting-item"><label for="notificationFilter">Notification Filter:</label> <input type="text" id="notificationFilter" value="">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="notificationForOptionsMenu"> Notification For Options Menu </label>
+                    </div>
+                    <div class="setting-item"><label for="notificationTextReplacements">Notification Text Replacements:</label> <input type="text" id="notificationTextReplacements" value="">
+                    </div>
+                    <div class="setting-item"><label for="notificationVisibility">Notification Visibility:</label> <select id="notificationVisibility"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="PUBLIC">PUBLIC</option> <option value="PRIVATE">PRIVATE</option> <option value="SECRET">SECRET</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="toastDuration">Toast Duration:</label> <select id="toastDuration"> <option value="NO_CHANGE" selected>NO_CHANGE</option> <option value="SHORT">SHORT</option> <option value="LONG">LONG</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="toastFilter">Toast Filter:</label> <input type="text" id="toastFilter" value="">
+                    </div>
+                    <div class="setting-item"><label for="toastHorizontalAlignment">Toast Horizontal Alignment:</label> <select id="toastHorizontalAlignment"> <option value="CENTER" selected>CENTER</option> <option value="LEFT">LEFT</option> <option value="RIGHT">RIGHT</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="toastOpacity">Toast Opacity:</label> <input type="number" id="toastOpacity" value="1.0" step="0.1">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="toastPosition"> Toast Position </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="toastPrefixEnablePlaceholders"> Toast Prefix Enable Placeholders </label>
+                    </div>
+                    <div class="setting-item"><label for="toastVerticalAlignment">Toast Vertical Alignment:</label> <select id="toastVerticalAlignment"> <option value="BOTTOM" selected>BOTTOM</option> <option value="TOP">TOP</option> <option value="CENTER">CENTER</option> </select>
+                    </div>
+                </div>
+                <li class="option-item" onclick="toggleOption(this, 'gameOptions')"><span class="option-text">Game Options</span> <span class="chevron">›</span></li>
+                <div id="gameOptions" class="option-details">
+                    <div class="setting-item"><label> <input type="checkbox" id="fpsMonitor"> FPS Monitor </label>
+                    </div>
+                    <div class="setting-item"><label for="fpsMonitorColor">FPS Monitor Color:</label> <input type="number" id="fpsMonitorColor" value="-7829368">
+                    </div>
+                    <div class="setting-item"><label for="fpsMonitorHorizontalAlignment">FPS Monitor Horizontal Alignment:</label> <select id="fpsMonitorHorizontalAlignment"> <option value="RIGHT" selected>RIGHT</option> <option value="LEFT">LEFT</option> <option value="CENTER">CENTER</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="fpsMonitorOpacity">FPS Monitor Opacity:</label> <input type="number" id="fpsMonitorOpacity" value="1.0" step="0.1">
+                    </div>
+                    <div class="setting-item"><label for="fpsMonitorSize">FPS Monitor Size:</label> <select id="fpsMonitorSize"> <option value="MEDIUM" selected>MEDIUM</option> <option value="SMALL">SMALL</option> <option value="LARGE">LARGE</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="fpsMonitorVerticalAlignment">FPS Monitor Vertical Alignment:</label> <select id="fpsMonitorVerticalAlignment"> <option value="BOTTOM" selected>BOTTOM</option> <option value="TOP">TOP</option> <option value="CENTER">CENTER</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="gpsJoystick"> GPS Joystick </label>
+                    </div>
+                    <div class="setting-item"><label for="gpsJoystickColor">GPS Joystick Color:</label> <input type="number" id="gpsJoystickColor" value="-7829368">
+                    </div>
+                    <div class="setting-item"><label for="gpsJoystickHorizontalAlignment">GPS Joystick Horizontal Alignment:</label> <select id="gpsJoystickHorizontalAlignment"> <option value="LEFT" selected>LEFT</option> <option value="RIGHT">RIGHT</option> <option value="CENTER">CENTER</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="gpsJoystickMaxSpeed">GPS Joystick Max Speed:</label> <input type="number" id="gpsJoystickMaxSpeed" value="1.5" step="0.1">
+                    </div>
+                    <div class="setting-item"><label for="gpsJoystickOpacity">GPS Joystick Opacity:</label> <input type="number" id="gpsJoystickOpacity" value="1.0" step="0.1">
+                    </div>
+                    <div class="setting-item"><label for="gpsJoystickSize">GPS Joystick Size:</label> <select id="gpsJoystickSize"> <option value="MEDIUM" selected>MEDIUM</option> <option value="SMALL">SMALL</option> <option value="LARGE">LARGE</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="gpsJoystickVerticalAlignment">GPS Joystick Vertical Alignment:</label> <select id="gpsJoystickVerticalAlignment"> <option value="BOTTOM" selected>BOTTOM</option> <option value="TOP">TOP</option> <option value="CENTER">CENTER</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="markAsGame"> Mark As Game </label>
+                    </div>
+                </div>
+                <li class="option-item" onclick="toggleOption(this, 'androidTvWearOsOptions')"><span class="option-text">Android TV &amp; Wear OS Options</span> <span class="chevron">›</span></li>
+                <div id="androidTvWearOsOptions" class="option-details">
+                    <div class="setting-item"><label> <input type="checkbox" id="markAsGame"> Mark As Game </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="samsungDexSupport"> Samsung Dex Support </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="joystickPointer"> Joystick Pointer </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="joystickPointerAutoHide"> Joystick Pointer Auto Hide </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="joystickPointerAutoScroll"> Joystick Pointer Auto Scroll </label>
+                    </div>
+                    <div class="setting-item"><label for="joystickPointerColor">Joystick Pointer Color:</label> <input type="number" id="joystickPointerColor" value="-7829368">
+                    </div>
+                    <div class="setting-item"><label for="joystickPointerOpacity">Joystick Pointer Opacity:</label> <input type="number" id="joystickPointerOpacity" value="1.0" step="0.1">
+                    </div>
+                    <div class="setting-item"><label for="joystickPointerScrollSpeed">Joystick Pointer Scroll Speed:</label> <input type="number" id="joystickPointerScrollSpeed" value="1">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="joystickPointerShowInitially"> Joystick Pointer Show Initially </label>
+                    </div>
+                    <div class="setting-item"><label for="joystickPointerSize">Joystick Pointer Size:</label> <select id="joystickPointerSize"> <option value="MEDIUM" selected>MEDIUM</option> <option value="SMALL">SMALL</option> <option value="LARGE">LARGE</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="joystickPointerToggleLongPress"> Joystick Pointer Toggle Long Press </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="enableTvVersion"> Enable TV Version </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="makeWatchApp"> Make Watch App </label>
+                    </div>
+                </div>
+                <li class="option-item" onclick="toggleOption(this, 'automationOptions')"><span class="option-text">Automation Options</span> <span class="chevron">›</span></li>
+                <div id="automationOptions" class="option-details">
+                    <div class="setting-item"><label> <input type="checkbox" id="restoreAutoRotateOnExit"> Restore Auto Rotate On Exit </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="restoreAutoRotateOnPause"> Restore Auto Rotate On Pause </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="restoreBluetoothStateOnExit"> Restore Bluetooth State On Exit </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="restoreBluetoothStateOnPause"> Restore Bluetooth State On Pause </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="restoreBrightnessOnExit"> Restore Brightness On Exit </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="doNotDisturb"> Do Not Disturb </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="restoreDoNotDisturbOnExit"> Restore Do Not Disturb On Exit </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="restoreDoNotDisturbOnPause"> Restore Do Not Disturb On Pause </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="restoreWifiStateOnExit"> Restore WiFi State On Exit </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="restoreWifiStateOnPause"> Restore WiFi State On Pause </label>
+                    </div>
+                    <div class="setting-item"><label for="taskerStartTaskName">Tasker Start Task Name:</label> <input type="text" id="taskerStartTaskName" value="">
+                    </div>
+                    <div class="setting-item"><label for="taskerStopTaskName">Tasker Stop Task Name:</label> <input type="text" id="taskerStopTaskName" value="">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="scrollWithKeyboardEnabled"> Scroll With Keyboard Enabled </label>
+                    </div>
+                    <div class="setting-item"><label for="scrollDownKeyCode">Scroll Down Key Code:</label> <input type="text" id="scrollDownKeyCode" value="NUMPAD_2">
+                    </div>
+                    <div class="setting-item"><label for="scrollLeftKeyCode">Scroll Left Key Code:</label> <input type="text" id="scrollLeftKeyCode" value="NUMPAD_4">
+                    </div>
+                    <div class="setting-item"><label for="scrollRightKeyCode">Scroll Right Key Code:</label> <input type="text" id="scrollRightKeyCode" value="NUMPAD_6">
+                    </div>
+                    <div class="setting-item"><label for="scrollSpeed">Scroll Speed:</label> <input type="number" id="scrollSpeed" value="1">
+                    </div>
+                    <div class="setting-item"><label for="scrollUpKeyCode">Scroll Up Key Code:</label> <input type="text" id="scrollUpKeyCode" value="NUMPAD_8">
+                    </div>
+                    <div class="setting-item"><label for="autoPressButtons">Auto Press Buttons:</label> <input type="text" id="autoPressButtons" value="">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="autoPressButtonsEnablePlaceholders"> Auto Press Buttons Enable Placeholders </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="autoPressButtonsInBackground"> Auto Press Buttons In Background </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="autoPressButtonsPerformTouchClicks"> Auto Press Buttons Perform Touch Clicks </label>
+                    </div>
+                    <div class="setting-item"><label for="exitTimerAction">Exit Timer Action:</label> <select id="exitTimerAction"> <option value="DISABLED" selected>DISABLED</option> <option value="ENABLED">ENABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="exitTimerSeconds">Exit Timer Seconds:</label> <input type="number" id="exitTimerSeconds" value="10">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="exitTimerWarning"> Exit Timer Warning </label>
+                    </div>
+                    <div class="setting-item"><label for="exitTimerWarningSeconds">Exit Timer Warning Seconds:</label> <input type="number" id="exitTimerWarningSeconds" value="5">
+                    </div>
+                </div>
+                <li class="option-item" onclick="toggleOption(this, 'sharingSelectionCopyOptions')"><span class="option-text">Sharing, Selection &amp; Copy Options</span> <span class="chevron">›</span></li>
+                <div id="sharingSelectionCopyOptions" class="option-details">
+                    <div class="setting-item"><label for="copyTextFromTextViews">Copy Text From TextViews:</label> <select id="copyTextFromTextViews"> <option value="DISABLED" selected>DISABLED</option> <option value="ENABLED">ENABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="allowTextSelection"> Allow Text Selection </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="alwaysAllowCopyPaste"> Always Allow Copy Paste </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="longPressToTranslate"> Long Press To Translate </label>
+                    </div>
+                    <div class="setting-item"><label for="allowSharingImagesFormat">Allow Sharing Images Format:</label> <select id="allowSharingImagesFormat"> <option value="JPEG" selected>JPEG</option> <option value="PNG">PNG</option> <option value="WEBP">WEBP</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="clipboardTimeout"> Clipboard Timeout </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="longPressToRevealPassword"> Long Press To Reveal Password </label>
+                    </div>
+                    <div class="setting-item"><label for="longPressToTranslateMode">Long Press To Translate Mode:</label> <select id="longPressToTranslateMode"> <option value="REPLACE_TEXT" selected>REPLACE_TEXT</option> <option value="SHOW_TRANSLATION">SHOW_TRANSLATION</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="longPressToTranslateTargetLanguage">Long Press To Translate Target Language:</label> <input type="text" id="longPressToTranslateTargetLanguage" value="en">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="copyTextWhileScrolling"> Copy Text While Scrolling </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="copyTextWhileScrollingIncludeHiddenViews"> Copy Text While Scrolling Include Hidden Views </label>
+                    </div>
+                    <div class="setting-item"><label for="copyTextWhileScrollingMode">Copy Text While Scrolling Mode:</label> <select id="copyTextWhileScrollingMode"> <option value="COPY_EVERYTHING" selected>COPY_EVERYTHING</option> <option value="COPY_VISIBLE_TEXT">COPY_VISIBLE_TEXT</option> </select>
+                    </div>
+                </div>
+                <li class="option-item" onclick="toggleOption(this, 'developerOptions')"><span class="option-text">Developer Options</span> <span class="chevron">›</span></li>
+                <div id="developerOptions" class="option-details">
+                    <div class="setting-item"><label> <input type="checkbox" id="makeDebuggable"> Make Debuggable </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="makeWebViewsDebuggable"> Make WebViews Debuggable </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="debugLogGetPackageName"> Debug Log Get Package Name </label>
+                    </div>
+                    <div class="setting-item"><label for="serialFormat">Serial Format:</label> <select id="serialFormat"> <option value="GOOGLE" selected>GOOGLE</option> <option value="SAMSUNG">SAMSUNG</option> <option value="HTC">HTC</option> <option value="LG">LG</option> </select>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="debugUtils"> Debug Utils </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="logcatViewer"> Logcat Viewer </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="databaseEditor"> Database Editor </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="dexDumper"> Dex Dumper </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="debugHttpAnalyzer"> Debug HTTP Analyzer </label>
+                    </div>
+                    <div class="setting-item"><label for="overrideSharedPreferences">Override Shared Preferences:</label> <input type="text" id="overrideSharedPreferences" value="">
+                    </div>
+                    <div class="setting-item"><label for="customBuildProps">Custom Build Props:</label> <input type="text" id="customBuildProps" value="">
+                    </div>
+                    <div class="setting-item"><label for="customCodeLanguage">Custom Code Language:</label> <select id="customCodeLanguage"> <option value="JAVA" selected>JAVA</option> <option value="KOTLIN">KOTLIN</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="scanditLicenseKey">Scandit License Key:</label> <select id="scanditLicenseKey"> <option value="DISABLED" selected>DISABLED</option> <option value="ENABLED">ENABLED</option> </select>
+                    </div>
+                    <div class="setting-item"><label for="systemPropertyCheckList">System Property Check List:</label> <input type="text" id="systemPropertyCheckList" value="">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="nativeMethodWorkaround"> Native Method Workaround </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="disableStrictMode"> Disable Strict Mode </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="stethoSupport"> Stetho Support </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="bringAppToFrontNotification"> Bring App To Front Notification </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="signAsSystemApp"> Sign As System App </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="jobSchedulingMonitor"> Job Scheduling Monitor </label>
+                    </div>
+                    <div class="setting-item"><label for="jobSchedulingMultiplier">Job Scheduling Multiplier:</label> <input type="number" id="jobSchedulingMultiplier" value="1.0" step="0.1">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="waitForDebugger"> Wait For Debugger </label>
+                    </div>
+                    <div class="setting-item"><label for="performGarbageCollectionInterval">Perform Garbage Collection Interval:</label> <input type="number" id="performGarbageCollectionInterval" value="60">
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="performGarbageCollectionPeriodically"> Perform Garbage Collection Periodically </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="performGarbageCollectionSilently"> Perform Garbage Collection Silently </label>
+                    </div>
+                    <div class="setting-item"><label> <input type="checkbox" id="performGarbageCollectionWhenLeavingApp"> Perform Garbage Collection When Leaving App </label>
+                    </div>
+                </div>
+            </ul> <button class="save-button" onclick="saveConfiguration()">Save Configuration</button>
+        </div>
+        <script>
+function toggleOption(element, detailsId) {
+    const details = document.getElementById(detailsId);
+    const chevron = element.querySelector('.chevron');
+    if (details.classList.contains('show')) {
+        details.classList.remove('show');
+        chevron.style.transform = 'rotate(0deg)';
+    } else {
+        details.classList.add('show');
+        chevron.style.transform = 'rotate(90deg)';
+    }
+}
+
+function flattenJsonConfig(config) {
+    const flattenedConfig = {};
+    for (const category in config) {
+        for (const key in config[category]) {
+            flattenedConfig[key] = config[category][key];
+        }
+    }
+    return flattenedConfig;
+}
+
+function generateKeyFromPackageName(packageName) {
+    const FIXED_STRING = "/I am the one who knocks!";
+    const combinedString = packageName + FIXED_STRING;
+    const hash = CryptoJS.MD5(combinedString);
+    const keyBytes = hash.toString(CryptoJS.enc.Hex).substring(0, 32);
+    return CryptoJS.enc.Hex.parse(keyBytes);
+}
+
+function encryptAES(plainText, key) {
+    const encrypted = CryptoJS.AES.encrypt(plainText, key, {
+        mode: CryptoJS.mode.ECB,
+        padding: CryptoJS.pad.Pkcs7
+    });
+    return encrypted.toString();
+}
+
+function getConfigurationFromForm() {
+    return {
+        "Cloning Options": {
+            cloningMode: document.getElementById('cloningMode').value,
+            manifestCompatibilityMode: document.getElementById('manifestCompatibilityMode').checked,
+            skipAssetFiles: document.getElementById('skipAssetFiles').checked,
+            skipNativeLibraries: document.getElementById('skipNativeLibraries').checked,
+            nativeMethodWorkaround: document.getElementById('nativeMethodWorkaround').checked,
+            ignoreCrashes: document.getElementById('ignoreCrashes').checked,
+            ignoreCrashesAdvancedMode: document.getElementById('ignoreCrashesAdvancedMode').checked,
+            ignoreCrashesShowCrashMessages: document.getElementById('ignoreCrashesShowCrashMessages').checked,
+            disableSignatureVerification: document.getElementById('disableSignatureVerification').checked,
+            disableLicenseValidation: document.getElementById('disableLicenseValidation').checked,
+            packageNameCheckWorkaround: document.getElementById('packageNameCheckWorkaround').checked,
+            googlePlayServicesWorkaround: document.getElementById('googlePlayServicesWorkaround').checked,
+            hideGooglePlayServices: document.getElementById('hideGooglePlayServices').checked,
+            disableRuntimeModdingOptions: document.getElementById('disableRuntimeModdingOptions').checked,
+            hookFramework: document.getElementById('hookFramework').value,
+            earlyHooks: document.getElementById('earlyHooks').checked,
+            facebookLoginBehavior: document.getElementById('facebookLoginBehavior').value,
+            twitterLoginBehavior: document.getElementById('twitterLoginBehavior').value,
+            hideEmulator: document.getElementById('hideEmulator').checked,
+            cloneCheckWorkaround: document.getElementById('cloneCheckWorkaround').checked,
+            processNameWorkaround: document.getElementById('processNameWorkaround').checked,
+            singleProcess: document.getElementById('singleProcess').checked,
+            singleProcessSilent: document.getElementById('singleProcessSilent').checked,
+            updateCheck: document.getElementById('updateCheck').checked,
+            preventExternalUpdates: document.getElementById('preventExternalUpdates').checked,
+            preventExternalUpdatesIncreaseVersionCode: document.getElementById('preventExternalUpdatesIncreaseVersionCode').checked,
+            allowInMultiAccountApps: document.getElementById('allowInMultiAccountApps').checked,
+            hideFromClonedApps: document.getElementById('hideFromClonedApps').checked,
+            noKill: document.getElementById('noKill').checked,
+            noKillCrashWorkaround: document.getElementById('noKillCrashWorkaround').checked,
+            noKillCrashWorkaroundMethod: document.getElementById('noKillCrashWorkaroundMethod').value,
+            noKillPreventFinishingActivities: document.getElementById('noKillPreventFinishingActivities').checked
+        },
+        "Identity and Tracking Options": {
+    hideWifiInfo: document.getElementById('hideWifiInfo').checked,
+    hideSimOperatorInfo: document.getElementById('hideSimOperatorInfo').checked,
+    hideGpuInfo: document.getElementById('hideGpuInfo').checked,
+    hideCpuInfo: document.getElementById('hideCpuInfo').checked,
+    hideDnsServers: document.getElementById('hideDnsServers').checked,
+    changeAdvertisingIdentifiers: document.getElementById('changeAdvertisingIdentifiers').value,
+    changeAmazonAdvertisingId: document.getElementById('changeAmazonAdvertisingId').value,
+    changeAndroidId: document.getElementById('changeAndroidId').value,
+    changeAndroidSerial: document.getElementById('changeAndroidSerial').value,
+    changeAppSetId: document.getElementById('changeAppSetId').value,
+    changeWifiMacAddress: document.getElementById('changeWifiMacAddress').value,
+    changeBluetoothMacAddress: document.getElementById('changeBluetoothMacAddress').value,
+    changeEthernetMacAddress: document.getElementById('changeEthernetMacAddress').value,
+    changeFacebookAttributionId: document.getElementById('changeFacebookAttributionId').value,
+    changeGoogleAdvertisingId: document.getElementById('changeGoogleAdvertisingId').value,
+    changeGoogleServiceFrameworkId: document.getElementById('changeGoogleServiceFrameworkId').value,
+    changeHuaweiAdvertisingId: document.getElementById('changeHuaweiAdvertisingId').value,
+    changeImei: document.getElementById('changeImei').value,
+    changeImsi: document.getElementById('changeImsi').value,
+    changeLocale: document.getElementById('changeLocale').value,
+    changeOpenId: document.getElementById('changeOpenId').value,
+    newIdentity: document.getElementById('newIdentity').checked,
+    newIdentityAutomaticallyRestartApp: document.getElementById('newIdentityAutomaticallyRestartApp').checked,
+    newIdentityClearCache: document.getElementById('newIdentityClearCache').checked,
+    newIdentityDeleteAppData: document.getElementById('newIdentityDeleteAppData').checked,
+    newIdentityShowNotification: document.getElementById('newIdentityShowNotification').checked,
+    newIdentityPersistentNotification: document.getElementById('newIdentityPersistentNotification').checked,
+    randomizeFileTimestamps: document.getElementById('randomizeFileTimestamps').checked,
+    randomizeBootId: document.getElementById('randomizeBootId').checked,
+    randomizeBuildProps: document.getElementById('randomizeBuildProps').checked,
+    filterDevicesDatabase: document.getElementById('filterDevicesDatabase').checked,
+    devicesDatabaseUseAndroidVersion: document.getElementById('devicesDatabaseUseAndroidVersion').checked,
+    devicesDatabaseSdkVersions: {}, // Assuming this is a placeholder for a more complex structure
+    randomizeBuildPropsDeviceNamePrefix: document.getElementById('randomizeBuildPropsDeviceNamePrefix').value,
+    randomizeDeviceUptime: document.getElementById('randomizeDeviceUptime').checked,
+    randomizeDrmIdentifiers: document.getElementById('randomizeDrmIdentifiers').checked,
+    randomizeInstallUpdateTime: document.getElementById('randomizeInstallUpdateTime').checked,
+    randomizeBatteryLevel: document.getElementById('randomizeBatteryLevel').checked,
+    randomizeBatteryLevelMax: parseInt(document.getElementById('randomizeBatteryLevelMax').value),
+    randomizeBatteryLevelMin: parseInt(document.getElementById('randomizeBatteryLevelMin').value),
+    randomizeBatteryTemp: document.getElementById('randomizeBatteryTemp').checked,
+    randomizeBatteryTempMax: parseInt(document.getElementById('randomizeBatteryTempMax').value),
+    randomizeBatteryTempMin: parseInt(document.getElementById('randomizeBatteryTempMin').value),
+    randomizeTotalFreeMemory: document.getElementById('randomizeTotalFreeMemory').checked,
+    randomizeTotalFreeStorage: document.getElementById('randomizeTotalFreeStorage').checked,
+    randomizeUserCreationTime: document.getElementById('randomizeUserCreationTime').checked
+},
+        "Display Options": {
+            addPadding: {
+                enabled: document.getElementById('addPaddingEnabled').checked,
+                backgroundColor: parseInt(document.getElementById('addPaddingBackgroundColor').value),
+                bottomPadding: parseInt(document.getElementById('addPaddingBottomPadding').value),
+                leftPadding: parseInt(document.getElementById('addPaddingLeftPadding').value),
+                rightPadding: parseInt(document.getElementById('addPaddingRightPadding').value),
+                topPadding: parseInt(document.getElementById('addPaddingTopPadding').value),
+                setValuesIndividually: document.getElementById('addPaddingSetValuesIndividually').checked
+            },
+            addSnow: document.getElementById('addSnow').checked,
+            snowColor: parseInt(document.getElementById('snowColor').value),
+            snowCount: parseInt(document.getElementById('snowCount').value),
+            snowCustomSymbols: document.getElementById('snowCustomSymbols').value,
+            snowFadeBegin: parseFloat(document.getElementById('snowFadeBegin').value),
+            snowFadeEnd: parseFloat(document.getElementById('snowFadeEnd').value),
+            snowOpacity: parseFloat(document.getElementById('snowOpacity').value),
+            snowSize: document.getElementById('snowSize').value,
+            snowSpeed: document.getElementById('snowSpeed').value,
+            snowUseCustomSymbols: document.getElementById('snowUseCustomSymbols').checked,
+            fontScale: parseFloat(document.getElementById('fontScale').value),
+            allowDarkMode: document.getElementById('allowDarkMode').value
+        },
+        "Media Options": {
+            muteOnStart: document.getElementById('muteOnStart').checked,
+            muteWhileInForeground: document.getElementById('muteWhileInForeground').checked,
+            muteForTextOnScreen: document.getElementById('muteForTextOnScreen').value.split(',').map(item => item.trim()),
+            setVolumeOnStart: document.getElementById('setVolumeOnStart').checked,
+            setVolumeOnStartMaxVolume: parseInt(document.getElementById('setVolumeOnStartMaxVolume').value),
+            setVolumeOnStartMinVolume: parseInt(document.getElementById('setVolumeOnStartMinVolume').value),
+            setVolumeOnStartRandomRange: document.getElementById('setVolumeOnStartRandomRange').checked,
+            setVolumeOnStartVolume: parseInt(document.getElementById('setVolumeOnStartVolume').value),
+            preventAppFromChangingVolume: document.getElementById('preventAppFromChangingVolume').checked,
+            audioPlaybackCapture: document.getElementById('audioPlaybackCapture').value,
+            disableChromecastButton: document.getElementById('disableChromecastButton').checked,
+            hideScreenMirroring: document.getElementById('hideScreenMirroring').checked,
+            disableCameras: document.getElementById('disableCameras').checked,
+            fakeCamera: document.getElementById('fakeCamera').checked,
+            fakeCameraAddPictureAttributes: document.getElementById('fakeCameraAddPictureAttributes').checked,
+            fakeCameraAddSpoofedLocation: document.getElementById('fakeCameraAddSpoofedLocation').checked,
+            fakeCameraAlternativeMode: document.getElementById('fakeCameraAlternativeMode').checked,
+            fakeCameraAppSupport: document.getElementById('fakeCameraAppSupport').checked,
+            fakeCameraCloseStreamWorkaround: document.getElementById('fakeCameraCloseStreamWorkaround').checked,
+            fakeCameraFlipHorizontally: document.getElementById('fakeCameraFlipHorizontally').checked,
+            fakeCameraOpenStreamWorkaround: document.getElementById('fakeCameraOpenStreamWorkaround').checked,
+            fakeCameraRandomizePicture: document.getElementById('fakeCameraRandomizePicture').checked,
+            fakeCameraRandomizePictureStrength: parseInt(document.getElementById('fakeCameraRandomizePictureStrength').value),
+            fakeCameraResizePicture: document.getElementById('fakeCameraResizePicture').checked,
+            fakeCameraRotation: document.getElementById('fakeCameraRotation').value,
+            keepPlayingMedia: document.getElementById('keepPlayingMedia').checked,
+            showOnLockScreen: document.getElementById('showOnLockScreen').checked,
+            showOnSecondaryDisplay: document.getElementById('showOnSecondaryDisplay').checked,
+            showOnSecondaryDisplayActivitiesNames: document.getElementById('showOnSecondaryDisplayActivitiesNames').value.split(',').map(item => item.trim()),
+            showRoundTripTime: document.getElementById('showRoundTripTime').value,
+            showStreamVideoViewsOnTop: document.getElementById('showStreamVideoViewsOnTop').checked,
+            showStreamVideoViewsOnTopImmersiveMode: document.getElementById('showStreamVideoViewsOnTopImmersiveMode').checked,
+            muteMic: document.getElementById('muteMic').checked,
+            normalAudioMode: document.getElementById('normalAudioMode').checked,
+            startSound: document.getElementById('startSound').checked,
+            disableMediaBrowserService: document.getElementById('disableMediaBrowserService').checked
+        },
+        "WebView Options": {
+            changeWebViewUserAgent: document.getElementById('changeWebViewUserAgent').value,
+            customWebViewUserAgent: document.getElementById('customWebViewUserAgent').value,
+            geckoViewSupport: document.getElementById('geckoViewSupport').checked,
+            changeSystemUserAgent: document.getElementById('changeSystemUserAgent').value,
+            customSystemUserAgent: document.getElementById('customSystemUserAgent').value,
+            userAgentWorkaround: document.getElementById('userAgentWorkaround').checked,
+            userAgentWorkaroundSilent: document.getElementById('userAgentWorkaroundSilent').checked,
+            webViewDisableAudioContext: document.getElementById('webViewDisableAudioContext').checked,
+            webViewDisableWebGl: document.getElementById('webViewDisableWebGl').checked,
+            webViewDisableWebRtc: document.getElementById('webViewDisableWebRtc').checked,
+            webViewTextZoom: parseFloat(document.getElementById('webViewTextZoom').value),
+            webViewMetricsOptOut: document.getElementById('webViewMetricsOptOut').checked,
+            webViewOverrideUrlLoadingList: document.getElementById('webViewOverrideUrlLoadingList').value.split('\n'),
+            webViewUrlDataMonitor: document.getElementById('webViewUrlDataMonitor').checked,
+            webViewUrlDataMonitorAutoCopy: document.getElementById('webViewUrlDataMonitorAutoCopy').checked,
+            webViewUrlDataMonitorAutoOpen: document.getElementById('webViewUrlDataMonitorAutoOpen').checked,
+            webViewUrlDataMonitorFilter: document.getElementById('webViewUrlDataMonitorFilter').value,
+            webViewUrlDataMonitorFilterStrings: document.getElementById('webViewUrlDataMonitorFilterStrings').value.split('\n'),
+            webViewUrlDataMonitorShowJavaScriptUrls: document.getElementById('webViewUrlDataMonitorShowJavaScriptUrls').checked,
+            webViewUrlDataMonitorShowOverrideUrlLoading: document.getElementById('webViewUrlDataMonitorShowOverrideUrlLoading').checked,
+            webViewUrlDataMonitorUrlDecode: document.getElementById('webViewUrlDataMonitorUrlDecode').checked,
+            webViewUrlEditor: document.getElementById('webViewUrlEditor').checked,
+            showWebViewIFrameSourceCode: document.getElementById('showWebViewIFrameSourceCode').checked,
+            showWebViewSourceCode: document.getElementById('showWebViewSourceCode').checked,
+            showWebViewSourceCodeFilter: document.getElementById('showWebViewSourceCodeFilter').value,
+            showWebViewSourceCodeFilterStrings: document.getElementById('showWebViewSourceCodeFilterStrings').value.split('\n')
+        },
+        "Storage Options": {
+            installToSdCard: document.getElementById('installToSdCard').checked,
+            redirectExternalStorage: document.getElementById('redirectExternalStorage').checked,
+            accessibleDataDirectory: document.getElementById('accessibleDataDirectory').checked,
+            accessibleDataDirectoryAdvancedMode: document.getElementById('accessibleDataDirectoryAdvancedMode').checked,
+            clearCacheOnExit: document.getElementById('clearCacheOnExit').checked,
+            clearCacheWhenLowOnStorage: document.getElementById('clearCacheWhenLowOnStorage').checked,
+            requestAllFilesAccessPermission: document.getElementById('requestAllFilesAccessPermission').checked,
+            securelyDeleteFilesDirectoriesOnExit: document.getElementById('securelyDeleteFilesDirectoriesOnExit').checked,
+            promptKeepAppDataOnUninstall: document.getElementById('promptKeepAppDataOnUninstall').checked,
+            bundleAppData: document.getElementById('bundleAppData').checked,
+            restoreAppDataOnEveryStart: document.getElementById('restoreAppDataOnEveryStart').checked,
+            bundleAppDataEncryptCertificate: document.getElementById('bundleAppDataEncryptCertificate').checked,
+            bundleFilesDirectories: document.getElementById('bundleFilesDirectories').value.split(',').map(item => item.trim()),
+            bundleInternalFilesDirectories: document.getElementById('bundleInternalFilesDirectories').value.split(',').map(item => item.trim()),
+            bundleOriginalApp: document.getElementById('bundleOriginalApp').checked,
+            fileAccessMonitor: document.getElementById('fileAccessMonitor').checked,
+            disableSpaceManagement: document.getElementById('disableSpaceManagement').checked,
+            deleteFilesDirectoriesOnExit: document.getElementById('deleteFilesDirectoriesOnExit').value.split(',').map(item => item.trim()),
+            preserveExpansionFiles: document.getElementById('preserveExpansionFiles').checked
+        },
+        "Networking Options": {
+    disableAllNetworking: document.getElementById('disableAllNetworking').checked,
+    disableMobileData: document.getElementById('disableMobileData').checked,
+    httpProxy: document.getElementById('httpProxy').checked,
+    hideMobileHotspot: document.getElementById('hideMobileHotspot').checked,
+    hideCaCerts: document.getElementById('hideCaCerts').checked,
+    hideLinkAddress: document.getElementById('hideLinkAddress').checked,
+    hostMapperSilent: document.getElementById('hostMapperSilent').checked,
+    hostsBlocker: document.getElementById('hostsBlocker').checked,
+    hostsBlockerAllowAllOtherHosts: document.getElementById('hostsBlockerAllowAllOtherHosts').checked,
+    overrideBindAddress: document.getElementById('overrideBindAddress').value,
+    disableClearTextNetworking: document.getElementById('disableClearTextNetworking').checked,
+    disableNetworkingWhenScreenOff: document.getElementById('disableNetworkingWhenScreenOff').checked,
+    disableNetworkingWithoutVpn: document.getElementById('disableNetworkingWithoutVpn').checked,
+    mockEthernetConnection: document.getElementById('mockEthernetConnection').value,
+    mockMobileConnection: document.getElementById('mockMobileConnection').value,
+    mockWifiConnection: document.getElementById('mockWifiConnection').value,
+    useSocksVpnService: document.getElementById('useSocksVpnService').checked,
+    socksProxy: document.getElementById('socksProxy').checked,
+    socksProxyHost: document.getElementById('socksProxyHost').value,
+    socksProxyPort: parseInt(document.getElementById('socksProxyPort').value),
+    socksProxyAlternativeMode: document.getElementById('socksProxyAlternativeMode').checked,
+    socksProxyApi: document.getElementById('socksProxyApi').checked,
+    socksProxyEnablePlaceholders: document.getElementById('socksProxyEnablePlaceholders').checked,
+    socksProxyList: [document.getElementById('socksProxyList').value],
+    socksProxyListRandomProxy: document.getElementById('socksProxyListRandomProxy').checked,
+    socksProxyListShowProxySelectorNotification: document.getElementById('socksProxyListShowProxySelectorNotification').checked,
+    socksProxySilent: document.getElementById('socksProxySilent').checked,
+    dnsOverHttps: document.getElementById('dnsOverHttps').value,
+    dnsOverHttpsCustomUrl: document.getElementById('dnsOverHttpsCustomUrl').value,
+    dnsOverHttpsSilent: document.getElementById('dnsOverHttpsSilent').checked
+      },
+        "Launching Options": {
+    disableWidgets: document.getElementById('disableWidgets').checked,
+    removeLauncherIcon: document.getElementById('removeLauncherIcon').checked,
+    removeLauncherIconAndroidTv: document.getElementById('removeLauncherIconAndroidTv').checked,
+    removeLauncherIconProtectFromShortcutMakers: document.getElementById('removeLauncherIconProtectFromShortcutMakers').checked,
+    removeLauncherIconShortcuts: document.getElementById('removeLauncherIconShortcuts').checked,
+    showInPowerMenu: document.getElementById('showInPowerMenu').checked,
+    showOnLockScreen: document.getElementById('showOnLockScreen').checked,
+    persistentApp: document.getElementById('persistentApp').checked,
+    persistentAppAccessibilityService: document.getElementById('persistentAppAccessibilityService').checked,
+    noBackgroundServices: document.getElementById('noBackgroundServices').checked,
+    forceCloseOnExit: document.getElementById('forceCloseOnExit').checked,
+    fileUrlAssociations: [], // Assuming this is a placeholder for a more complex structure
+    fileUrlAssociationsEnablePlaceholders: document.getElementById('fileUrlAssociationsEnablePlaceholders').checked,
+    autoStart: document.getElementById('autoStart').value,
+    launchQuickSettingsTile: document.getElementById('launchQuickSettingsTile').checked,
+    launchWithNfcTag: document.getElementById('launchWithNfcTag').checked,
+    exitAppIfPasswordIncorrect: document.getElementById('exitAppIfPasswordIncorrect').checked,
+    exitAppOnScreenOff: document.getElementById('exitAppOnScreenOff').checked,
+    exitAppWhenStorageUnmounted: document.getElementById('exitAppWhenStorageUnmounted').checked,
+    launchAppWhenStorageMounted: document.getElementById('launchAppWhenStorageMounted').checked,
+    documentLaunchMode: document.getElementById('documentLaunchMode').checked,
+    disableWakeLocks: document.getElementById('disableWakeLocks').checked,
+    makeHomeApp: document.getElementById('makeHomeApp').checked,
+    makeAssistApp: document.getElementById('makeAssistApp').checked,
+    makeCameraApp: document.getElementById('makeCameraApp').checked,
+    requestAllPermissions: document.getElementById('requestAllPermissions').checked,
+    requestPermissions: [], // Assuming this is a placeholder for a more complex structure
+    requestIgnoreBatteryOptimizations: document.getElementById('requestIgnoreBatteryOptimizations').checked
+         },
+         
+        "Developer Options": {
+    makeDebuggable: document.getElementById('makeDebuggable').checked,
+    makeWebViewsDebuggable: document.getElementById('makeWebViewsDebuggable').checked,
+    debugLogGetPackageName: document.getElementById('debugLogGetPackageName').checked,
+    serialFormat: document.getElementById('serialFormat').value,
+    debugUtils: document.getElementById('debugUtils').checked,
+    logcatViewer: document.getElementById('logcatViewer').checked,
+    databaseEditor: document.getElementById('databaseEditor').checked,
+    dexDumper: document.getElementById('dexDumper').checked,
+    debugHttpAnalyzer: document.getElementById('debugHttpAnalyzer').checked,
+    overrideSharedPreferences: [], // Assuming this is a placeholder for a more complex structure
+    customBuildProps: [], // Assuming this is a placeholder for a more complex structure
+    customCodeLanguage: document.getElementById('customCodeLanguage').value,
+    scanditLicenseKey: document.getElementById('scanditLicenseKey').value,
+    systemPropertyCheckList: [], // Assuming this is a placeholder for a more complex structure
+    nativeMethodWorkaround: document.getElementById('nativeMethodWorkaround').checked,
+    disableStrictMode: document.getElementById('disableStrictMode').checked,
+    stethoSupport: document.getElementById('stethoSupport').checked,
+    bringAppToFrontNotification: document.getElementById('bringAppToFrontNotification').checked,
+    signAsSystemApp: document.getElementById('signAsSystemApp').checked,
+    jobSchedulingMonitor: document.getElementById('jobSchedulingMonitor').checked,
+    jobSchedulingMultiplier: parseFloat(document.getElementById('jobSchedulingMultiplier').value),
+    waitForDebugger: document.getElementById('waitForDebugger').checked,
+    performGarbageCollectionInterval: parseInt(document.getElementById('performGarbageCollectionInterval').value),
+    performGarbageCollectionPeriodically: document.getElementById('performGarbageCollectionPeriodically').checked,
+    performGarbageCollectionSilently: document.getElementById('performGarbageCollectionSilently').checked,
+    performGarbageCollectionWhenLeavingApp: document.getElementById('performGarbageCollectionWhenLeavingApp').checked
+          },
+          
+        // Add other option categories here as they are implemented
+    };
+}
+
+function saveConfiguration() {
+    const packageName = prompt("Please enter the package name to encrypt the configuration:");
+    if (!packageName) {
+        alert("Package name is required to encrypt the configuration.");
+        return;
+    }
+
+    const config = getConfigurationFromForm();
+    const flattenedConfig = flattenJsonConfig(config);
+    const jsonString = JSON.stringify(flattenedConfig, null, 2);
+    const key = generateKeyFromPackageName(packageName);
+    const encryptedContent = encryptAES(jsonString, key);
+    
+    // Create and download the file
+    const blob = new Blob([encryptedContent], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'cloneSettings.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    alert("Configuration saved and encrypted successfully!");
+}
+</script>
+    </body>
+</html>
